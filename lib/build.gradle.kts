@@ -1,0 +1,114 @@
+plugins {
+    kotlin("jvm") version "1.4.20"
+    `java-library`
+    `maven-publish`
+    signing
+    id("org.jetbrains.dokka") version "1.4.10"
+    id("org.javamodularity.moduleplugin") version "1.7.0"
+}
+
+group = "org.rationalityfrontline.ktrader"
+version = "0.1.1-SNAPSHOT"
+val NAME = "ktrader-broker-api"
+val DESC = "KTrader Broker API"
+val GITHUB_REPO = "RationalityFrontline/ktrader-broker-api"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    api("org.pf4j:pf4j:3.4.1")
+    testImplementation(platform("org.junit:junit-bom:5.7.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
+}
+
+sourceSets.main {
+    java.srcDir("src/main/kotlin")
+}
+
+tasks {
+    dokkaHtml {
+        outputDirectory.set(buildDir.resolve("javadoc"))
+        moduleName.set("KTrader-Broker-API")
+        dokkaSourceSets {
+            named("main") {
+                includes.from("module.md")
+            }
+        }
+    }
+    register<Jar>("javadocJar") {
+        archiveClassifier.set("javadoc")
+        from(dokkaHtml)
+    }
+    register<Jar>("sourcesJar") {
+        archiveClassifier.set("sources")
+        from(sourceSets["main"].allSource)
+    }
+    test {
+        testLogging.showStandardStreams = true
+        useJUnitPlatform {
+            jvmArgs = listOf(
+                "--add-exports", "org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED",
+                "--add-exports", "org.junit.platform.commons/org.junit.platform.commons.logging=ALL-UNNAMED"
+            )
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
+            pom {
+                name.set(NAME)
+                description.set(DESC)
+                artifactId = NAME
+                packaging = "jar"
+                url.set("https://github.com/$GITHUB_REPO")
+                licenses {
+                    license {
+                        name.set("The Apache Software License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        name.set("RationalityFrontline")
+                        email.set("rationalityfrontline@gmail.com")
+                        organization.set("RationalityFrontline")
+                        organizationUrl.set("https://github.com/RationalityFrontline")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/$GITHUB_REPO.git")
+                    developerConnection.set("scm:git:ssh://github.com:$GITHUB_REPO.git")
+                    url.set("https://github.com/$GITHUB_REPO/tree/master")
+                }
+            }
+        }
+    }
+    repositories {
+        fun env(propertyName: String): String {
+            return if (project.hasProperty(propertyName)) {
+                project.property(propertyName) as String
+            } else "Unknown"
+        }
+        maven {
+            val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+            credentials {
+                username = env("ossrhUsername")
+                password = env("ossrhPassword")
+            }
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications["maven"])
+}
