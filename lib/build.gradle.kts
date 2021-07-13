@@ -1,27 +1,26 @@
 plugins {
-    kotlin("jvm") version "1.4.20"
+    kotlin("jvm") version "1.5.10"
     `java-library`
     `maven-publish`
     signing
-    id("org.jetbrains.dokka") version "1.4.10"
-    id("org.javamodularity.moduleplugin") version "1.7.0"
+    id("org.jetbrains.dokka") version "1.4.32"
+    id("org.javamodularity.moduleplugin") version "1.8.7"
 }
 
 group = "org.rationalityfrontline.ktrader"
-version = "0.1.1-SNAPSHOT"
+version = "0.1.6-SNAPSHOT"
 val NAME = "ktrader-broker-api"
 val DESC = "KTrader Broker API"
 val GITHUB_REPO = "RationalityFrontline/ktrader-broker-api"
 
 repositories {
+    mavenLocal()
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    api("org.pf4j:pf4j:3.4.1")
-    testImplementation(platform("org.junit:junit-bom:5.7.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
+    compileOnly("org.pf4j:pf4j:3.7.0-SNAPSHOT")
+    api("org.rationalityfrontline:kevent:2.0.0")
 }
 
 sourceSets.main {
