@@ -8,22 +8,26 @@ enum class InstrumentType {
 }
 
 enum class OptionsType {
+    UNKNOWN,
     CALL,
     PUT,
 }
 
 enum class Direction {
+    UNKNOWN,
     LONG,
     SHORT,
 }
 
 enum class TickDirection {
+    UNKNOWN,
     UP,
     STAY,
     DOWN,
 }
 
 enum class OrderOffset {
+    UNKNOWN,
     OPEN,
     CLOSE,
     CLOSE_TODAY,
@@ -31,6 +35,7 @@ enum class OrderOffset {
 }
 
 enum class OrderType {
+    UNKNOWN,
     CUSTOM,
     LIMIT,
     MARKET,
@@ -40,11 +45,11 @@ enum class OrderType {
 }
 
 enum class OrderStatus {
+    UNKNOWN,
     SUBMITTING,
     ACCEPTED,
     PARTIALLY_FILLED,
     FILLED,
-    CANCELING,
     CANCELED,
     ERROR,
 }

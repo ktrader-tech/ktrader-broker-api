@@ -15,7 +15,8 @@ enum class BrokerEventType {
     TD_USER_LOGGED_IN,
     TD_USER_LOGGED_OUT,
     TD_ORDER_STATUS,
-    TD_ORDER_FILLED,
+    TD_CANCEL_FAILED,
+    TD_TRADE_REPORT,
 }
 
 data class BrokerEvent(

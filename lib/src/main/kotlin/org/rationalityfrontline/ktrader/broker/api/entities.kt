@@ -2,7 +2,6 @@ package org.rationalityfrontline.ktrader.broker.api
 
 import java.time.LocalDate
 import java.time.LocalDateTime
-import kotlin.coroutines.Continuation
 
 data class Tick(
     val code: String,
@@ -16,7 +15,7 @@ data class Tick(
     val turnover: Double,
     val openInterest: Int,
     val direction: TickDirection,
-    val status: MarketStatus,
+    var status: MarketStatus,
     val yesterdayClose: Double,
     val yesterdaySettlementPrice: Double,
     val yesterdayOpenInterest: Int,
@@ -31,10 +30,11 @@ data class Tick(
     val todayVolume: Int,
     val todayTurnover: Double,
     val todayOpenInterest: Int,
-    val extras: Map<String, Any>? = null,
+    var extras: MutableMap<String, Any>? = null,
 )
 
 data class Order(
+    val accountId: String,
     val orderId: String,
     val code: String,
     val price: Double,
@@ -43,35 +43,30 @@ data class Order(
     val offset: OrderOffset,
     val orderType: OrderType,
     var status: OrderStatus,
+    var statusMsg: String,
     var filledVolume: Int,
     var turnover: Double,
+    var avgFillPrice: Double,
     var frozenCash: Double,
     var commission: Double,
     val createTime: LocalDateTime,
     var updateTime: LocalDateTime,
-    var errorInfo: String = "",
-    val extras: Map<String, Any>? = null,
-)
-
-data class OrderStatusUpdate(
-    val orderId: String,
-    val newStatus: OrderStatus,
-    val statusMsg: String = "",
-    val updateTime: LocalDateTime = LocalDateTime.now(),
-    val extras: Map<String, Any>? = null,
+    var extras: MutableMap<String, Any>? = null,
 )
 
 data class Trade(
+    val accountId: String,
     val tradeId: String,
     val orderId: String,
     val code: String,
     val price: Double,
     val volume: Int,
+    var turnover: Double,
     val direction: Direction,
-    val offset: OrderOffset,
-    val commission: Double,
+    var offset: OrderOffset,
+    var commission: Double,
     val time: LocalDateTime,
-    val extras: Map<String, Any>? = null,
+    var extras: MutableMap<String, Any>? = null,
 )
 
 data class MarginRate(
@@ -80,7 +75,7 @@ data class MarginRate(
     val longMarginRatioByVolume: Double,
     val shortMarginRatioByMoney: Double,
     val shortMarginRatioByVolume: Double,
-    val extras: Map<String, Any>? = null,
+    var extras: MutableMap<String, Any>? = null,
 )
 
 data class CommissionRate(
@@ -91,16 +86,19 @@ data class CommissionRate(
     val closeRatioByVolume: Double,
     val closeTodayRatioByMoney: Double,
     val closeTodayRatioByVolume: Double,
-    val orderInsertFeeByVolume: Double = 0.0,
-    val orderCancelFeeByVolume: Double = 0.0,
-    val orderInsertFeeByTrade: Double = 0.0,
-    val orderCancelFeeByTrade: Double = 0.0,
-    val extras: Map<String, Any>? = null,
+    var orderInsertFeeByVolume: Double = 0.0,
+    var orderCancelFeeByVolume: Double = 0.0,
+    var orderInsertFeeByTrade: Double = 0.0,
+    var orderCancelFeeByTrade: Double = 0.0,
+    val optionsStrikeRationByMoney: Double = 0.0,
+    val optionsStrikeRationByVolume: Double = 0.0,
+    var extras: MutableMap<String, Any>? = null,
 )
 
 data class Instrument(
     val code: String,
     val type: InstrumentType,
+    val productId: String = "",
     val name: String,
     val priceTick: Double,
     val isTrading: Boolean,
@@ -112,22 +110,26 @@ data class Instrument(
     var marginRate: MarginRate? = null,
     var commissionRate: CommissionRate? = null,
     val optionsType: OptionsType? = null,
-    val extras: Map<String, Any>? = null,
+    val optionsUnderlyingCode: String = "",
+    val optionsStrikePrice: Double = 0.0,
+    var extras: MutableMap<String, Any>? = null,
 )
 
 data class Assets(
+    val accountId: String,
     var total: Double,
     var available: Double,
     var positionValue: Double,
     var frozenByOrder: Double,
     var todayCommission: Double,
-    val extras: Map<String, Any>? = null,
+    var extras: MutableMap<String, Any>? = null,
 )
 
 data class Position(
+    val accountId: String,
     val code: String,
     val direction: Direction,
-    val yesterdayVolume: Int,
+    var yesterdayVolume: Int,
     var volume: Int,
     var value: Double,
     var todayVolume: Int,
@@ -136,16 +138,9 @@ data class Position(
     var todayOpenVolume: Int,
     var todayCloseVolume: Int,
     var todayCommission: Double,
-    val openCost: Double,
-    val avgOpenPrice: Double,
+    var openCost: Double,
+    var avgOpenPrice: Double,
     var lastPrice: Double,
     var pnl: Double,
-    val extras: Map<String, Any>? = null,
-)
-
-data class RequestContinuation(
-    val requestId: Int,
-    val continuation: Continuation<*>,
-    val tag: String = "",
-    val data: Any = Unit,
+    var extras: MutableMap<String, Any>? = null,
 )
