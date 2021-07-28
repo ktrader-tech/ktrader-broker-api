@@ -3,23 +3,22 @@ plugins {
     `java-library`
     `maven-publish`
     signing
-    id("org.jetbrains.dokka") version "1.4.32"
+    id("org.jetbrains.dokka") version "1.5.0"
     id("org.javamodularity.moduleplugin") version "1.8.7"
 }
 
 group = "org.rationalityfrontline.ktrader"
-version = "0.1.6-SNAPSHOT"
+version = "1.0.0"
 val NAME = "ktrader-broker-api"
 val DESC = "KTrader Broker API"
-val GITHUB_REPO = "RationalityFrontline/ktrader-broker-api"
+val GITHUB_REPO = "ktrader-tech/ktrader-broker-api"
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
-    compileOnly("org.pf4j:pf4j:3.7.0-SNAPSHOT")
+    compileOnly("org.rationalityfrontline.workaround:pf4j:3.7.0")
     api("org.rationalityfrontline:kevent:2.0.0")
 }
 
@@ -78,8 +77,8 @@ publishing {
                     developer {
                         name.set("RationalityFrontline")
                         email.set("rationalityfrontline@gmail.com")
-                        organization.set("RationalityFrontline")
-                        organizationUrl.set("https://github.com/RationalityFrontline")
+                        organization.set("ktrader-tech")
+                        organizationUrl.set("https://github.com/ktrader-tech")
                     }
                 }
                 scm {
