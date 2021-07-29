@@ -66,14 +66,14 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
 
     /**
      * 批量订阅行情
-     * @param codes 要订阅的标的代码集合
+     * @param codes 要订阅的证券代码集合
      * @param extras 额外的参数，默认为 null
      */
     abstract suspend fun subscribeMarketData(codes: Collection<String>, extras: Map<String, Any>? = null)
 
     /**
-     * 订阅单个标的行情
-     * @param code 要订阅的标的代码
+     * 订阅单个证券行情
+     * @param code 要订阅的证券代码
      * @param extras 额外的参数，默认为 null
      */
     open suspend fun subscribeMarketData(code: String, extras: Map<String, Any>? = null) {
@@ -82,14 +82,14 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
 
     /**
      * 批量取消订阅行情
-     * @param codes 要取消订阅的标的代码集合
+     * @param codes 要取消订阅的证券代码集合
      * @param extras 额外的参数，默认为 null
      */
     abstract suspend fun unsubscribeMarketData(codes: Collection<String>, extras: Map<String, Any>? = null)
 
     /**
-     * 取消订阅单个标的行情
-     * @param code 要取消订阅的标的代码
+     * 取消订阅单个证券行情
+     * @param code 要取消订阅的证券代码
      * @param extras 额外的参数，默认为 null
      */
     open suspend fun unsubscribeMarketData(code: String, extras: Map<String, Any>? = null) {
@@ -97,7 +97,7 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     }
 
     /**
-     * 订阅全市场标的行情
+     * 订阅全市场证券行情
      * @param extras 额外的参数，默认为 null
      */
     abstract suspend fun subscribeAllMarketData(extras: Map<String, Any>? = null)
@@ -109,7 +109,7 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     abstract suspend fun unsubscribeAllMarketData(extras: Map<String, Any>? = null)
 
     /**
-     * 查询当前已订阅的标的
+     * 查询当前已订阅的证券
      * @param useCache 是否优先查询本地维护的缓存信息，默认为 true
      * @param extras 额外的参数，默认为 null
      */
@@ -124,19 +124,19 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     abstract suspend fun queryLastTick(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Tick?
 
     /**
-     * 查询 [code] 的相关信息
+     * 查询 [code] 的证券信息
      * @param useCache 是否优先查询本地维护的缓存信息，默认为 true
      * @param extras 额外的参数，默认为 null
-     * @return 查询到的 [Instrument]，如果未查询到，返回 null
+     * @return 查询到的 [Security]，如果未查询到，返回 null
      */
-    abstract suspend fun queryInstrument(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Instrument?
+    abstract suspend fun querySecurity(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Security?
 
     /**
-     * 查询全市场标的的信息
+     * 查询全市场证券的信息
      * @param useCache 是否优先查询本地维护的缓存信息，默认为 true
      * @param extras 额外的参数，默认为 null
      */
-    abstract suspend fun queryAllInstruments(useCache: Boolean = true, extras: Map<String, Any>? = null): List<Instrument>
+    abstract suspend fun queryAllSecurities(useCache: Boolean = true, extras: Map<String, Any>? = null): List<Security>
 
     /**
      * 查询资金账户的资产
@@ -199,7 +199,7 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
 
     /**
      * 下单
-     * @param code 标的代码
+     * @param code 证券代码
      * @param price 下单价格
      * @param volume 下单数量
      * @param direction 交易方向（做多/做空）
@@ -231,7 +231,7 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
 
     /**
      * 准备费用计算（保证金/手续费）
-     * @param codes 要准备的标的
+     * @param codes 要准备计算的证券代码
      * @param extras 额外的参数，默认为 null
      */
     open suspend fun prepareFeeCalculation(codes: Collection<String>? = null, extras: Map<String, Any>? = null) {}

@@ -2,7 +2,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.rationalityfrontline.ktrader/ktrader-broker-api.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.rationalityfrontline.ktrader%22%20AND%20a:%22ktrader-broker-api%22)
 [![Apache License 2.0](https://img.shields.io/github/license/ktrader-tech/ktrader-broker-api)](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/LICENSE)
 
-[KTrader](https://github.com/ktrader-tech/ktrader) 量化交易平台的 Broker 统一接口。
+[KTrader](https://github.com/ktrader-tech/ktrader) 量化交易系统的 Broker 统一接口。
 > 该项目不依赖于 KTrader 的任何其它项目，可以独立使用。
 
 ## 目标
@@ -10,7 +10,7 @@
 > 目前主要针对中国国内市场（CTP & XTP）
 
 ## 使用说明
-该接口在设计上支持2种不同的使用方式：类库，插件。作为类库，直接添加依赖并使用即可。作为插件，会生成一个 ZIP 格式的压缩包插件，然后可以在运行时动态加载或卸载该插件，关于插件化技术请参考 [PF4J](https://github.com/pf4j/pf4j) 。
+该接口在设计上支持 2 种不同的使用方式：类库，插件。作为类库，直接添加依赖并使用即可。作为插件，会生成一个 ZIP 格式的压缩包插件，然后可以在运行时动态加载或卸载该插件，关于插件化技术请参考 [PF4J](https://github.com/pf4j/pf4j) 。
 
 要实现该接口，需要继承并实现 [BrokerApi](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/lib/src/main/kotlin/org/rationalityfrontline/ktrader/broker/api/BrokerApi.kt) 抽象类，并通过其成员属性 kEvent
 将各种推送事件（如 Tick，订单回报，成交回报等）发出。如果需要支持插件的使用方式，那么还需要继承并实现 [Broker](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/lib/src/main/kotlin/org/rationalityfrontline/ktrader/broker/api/Broker.kt) 抽象类。
@@ -18,6 +18,30 @@
 
 ## 已有的接口实现
 * [KTrader-Broker-CTP](https://github.com/ktrader-tech/ktrader-broker-ctp) CTP 实现（中国期货 & 期权）
+
+## Download
+
+**Gradle:**
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.rationalityfrontline.ktrader:ktrader-broker-api:1.1.0")
+}
+```
+
+**Maven:**
+
+```xml
+<dependency>
+    <groupId>org.rationalityfrontline.ktrader</groupId>
+    <artifactId>ktrader-broker-api</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
 
 ## License
 

@@ -1,9 +1,9 @@
 package org.rationalityfrontline.ktrader.broker.api
 
 /**
- * 标的类型
+ * 证券类型
  */
-enum class InstrumentType {
+enum class SecurityType {
 
     /**
      * 未知

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.rationalityfrontline.ktrader"
-version = "1.0.0"
+version = "1.1.0"
 val NAME = "ktrader-broker-api"
 val DESC = "KTrader Broker API"
 val GITHUB_REPO = "ktrader-tech/ktrader-broker-api"

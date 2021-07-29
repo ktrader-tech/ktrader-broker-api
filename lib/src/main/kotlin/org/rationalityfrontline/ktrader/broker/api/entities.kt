@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 /**
  * Tick
- * @param code 标的代码
+ * @param code 证券代码
  * @param time 产生时间
  * @param lastPrice 最新价
  * @param bidPrice 挂买价（买一，买二，买三 ...）
@@ -16,7 +16,7 @@ import java.time.LocalDateTime
  * @param turnover Tick 内的成交额
  * @param openInterest Tick 内的持仓量变动
  * @param direction Tick 的方向
- * @param status 标的当前的市场状态
+ * @param status 证券当前的市场状态
  * @param preClosePrice 昨日收盘价
  * @param preSettlementPrice 昨日结算价
  * @param preOpenInterest 昨日持仓量
@@ -67,7 +67,7 @@ data class Tick(
  * Order
  * @param accountId 资金账号
  * @param orderId 订单 ID
- * @param code 标的代码
+ * @param code 证券代码
  * @param price 订单价格
  * @param volume 订单数量
  * @param direction 订单交易方向
@@ -110,7 +110,7 @@ data class Order(
  * @param accountId 资金账号
  * @param tradeId 成交记录 ID
  * @param orderId 对应的订单 ID
- * @param code 标的代码
+ * @param code 证券代码
  * @param price 成交价
  * @param volume 成交量
  * @param turnover 成交额（期货/期权是成交价*成交量*合约乘数）
@@ -137,11 +137,11 @@ data class Trade(
 
 /**
  * 期货/期权保证金率
- * @param code 标的代码
- * @param longMarginRatioByMoney 多头保证金率（按金额）。当标的为期权时表示期权固定保证金
- * @param longMarginRatioByVolume 多头保证金（按手数）。当标的为期权时表示期权交易所固定保证金
- * @param shortMarginRatioByMoney 空头保证金率（按金额）。当标的为期权时表示期权最小保证金
- * @param shortMarginRatioByVolume 空头保证金（按手数）。当标的为期权时表示期权交易所最小保证金
+ * @param code 证券代码
+ * @param longMarginRatioByMoney 多头保证金率（按金额）。当证券为期权时表示期权固定保证金
+ * @param longMarginRatioByVolume 多头保证金（按手数）。当证券为期权时表示期权交易所固定保证金
+ * @param shortMarginRatioByMoney 空头保证金率（按金额）。当证券为期权时表示期权最小保证金
+ * @param shortMarginRatioByVolume 空头保证金（按手数）。当证券为期权时表示期权交易所最小保证金
  * @param extras 额外数据
  */
 data class MarginRate(
@@ -155,7 +155,7 @@ data class MarginRate(
 
 /**
  * 手续费率
- * @param code 标的代码
+ * @param code 证券代码
  * @param openRatioByMoney 开仓手续费率（按成交额）
  * @param openRatioByVolume 开仓手续费（按手数）
  * @param closeRatioByMoney 平仓手续费率（按成交额）
@@ -188,11 +188,11 @@ data class CommissionRate(
 )
 
 /**
- * 标的信息
- * @param code 标的代码
- * @param type 标的类型
- * @param productId 标的产品 ID （仅期货/期权）
- * @param name 标的名称
+ * 证券信息
+ * @param code 证券代码
+ * @param type 证券类型
+ * @param productId 证券的产品 ID （仅期货/期权）
+ * @param name 证券名称
  * @param priceTick 最小变动价格
  * @param isTrading 是否处于可交易状态
  * @param openDate 上市日
@@ -203,13 +203,13 @@ data class CommissionRate(
  * @param marginRate 保证金率
  * @param commissionRate 手续费率
  * @param optionsType 期权类型
- * @param optionsUnderlyingCode 期权对应的基础标的代码
+ * @param optionsUnderlyingCode 期权对应的基础证券代码
  * @param optionsStrikePrice 期权行权价格
  * @param extras 额外数据
  */
-data class Instrument(
+data class Security(
     val code: String,
-    val type: InstrumentType,
+    val type: SecurityType,
     val productId: String = "",
     val name: String,
     val priceTick: Double,
@@ -250,7 +250,7 @@ data class Assets(
 /**
  * 持仓信息
  * @param accountId 资金账号
- * @param code 标的代码
+ * @param code 证券代码
  * @param direction 持仓方向
  * @param preVolume 昨日持仓量
  * @param volume 今日持仓量
