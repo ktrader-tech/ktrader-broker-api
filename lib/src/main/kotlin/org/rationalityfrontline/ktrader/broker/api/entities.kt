@@ -166,8 +166,8 @@ data class MarginRate(
  * @param orderInsertFeeByTrade 报单手续费（按订单）
  * @param orderCancelFeeByVolume 撤单手续费（按手数）
  * @param orderCancelFeeByTrade 撤单手续费（按订单）
- * @param optionsStrikeRationByMoney 期权行权手续费率（按金额）
- * @param optionsStrikeRationByVolume 期权行权手续费（按手数）
+ * @param optionsStrikeRatioByMoney 期权行权手续费率（按金额）
+ * @param optionsStrikeRatioByVolume 期权行权手续费（按手数）
  * @param extras 额外数据
  */
 data class CommissionRate(
@@ -178,12 +178,12 @@ data class CommissionRate(
     val closeRatioByVolume: Double,
     val closeTodayRatioByMoney: Double,
     val closeTodayRatioByVolume: Double,
-    var orderInsertFeeByVolume: Double = 0.0,
-    var orderCancelFeeByVolume: Double = 0.0,
     var orderInsertFeeByTrade: Double = 0.0,
+    var orderInsertFeeByVolume: Double = 0.0,
     var orderCancelFeeByTrade: Double = 0.0,
-    val optionsStrikeRationByMoney: Double = 0.0,
-    val optionsStrikeRationByVolume: Double = 0.0,
+    var orderCancelFeeByVolume: Double = 0.0,
+    val optionsStrikeRatioByMoney: Double = 0.0,
+    val optionsStrikeRatioByVolume: Double = 0.0,
     var extras: MutableMap<String, Any>? = null,
 )
 
