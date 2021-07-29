@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     compileOnly("org.rationalityfrontline.workaround:pf4j:3.7.0")
-    api("org.rationalityfrontline:kevent:2.0.0")
+    api("org.rationalityfrontline:kevent:2.0.1")
 }
 
 sourceSets.main {
