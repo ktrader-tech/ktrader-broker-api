@@ -2,7 +2,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.rationalityfrontline.ktrader/ktrader-broker-api.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.rationalityfrontline.ktrader%22%20AND%20a:%22ktrader-broker-api%22)
 [![Apache License 2.0](https://img.shields.io/github/license/ktrader-tech/ktrader-broker-api)](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/LICENSE)
 
-[KTrader 量化交易系统的](https://github.com/ktrader-tech/ktrader) Broker 统一接口。
+[KTrader 量化交易系统](https://github.com/ktrader-tech/ktrader) 的 Broker 统一接口。
 > 虽然该项目是为 KTrader 量化交易系统而开发的，但也可以脱离 KTrader 独立使用
 
 ## 目标
