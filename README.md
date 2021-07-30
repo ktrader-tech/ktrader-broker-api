@@ -73,7 +73,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.rationalityfrontline.ktrader:ktrader-broker-api:1.1.1")
+    implementation("org.rationalityfrontline.ktrader:ktrader-broker-api:1.1.2")
 }
 ```
 
@@ -83,7 +83,7 @@ dependencies {
 <dependency>
     <groupId>org.rationalityfrontline.ktrader</groupId>
     <artifactId>ktrader-broker-api</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 </dependency>
 ```
 

@@ -6,14 +6,19 @@ package org.rationalityfrontline.ktrader.broker.api
 enum class BrokerEventType {
 
     /**
+     * 消息通知。[BrokerEvent.data]: [String]，消息内容
+     */
+    INFO,
+
+    /**
+     * 发生错误。[BrokerEvent.data]: [String]，错误信息
+     */
+    ERROR,
+
+    /**
      * 自定义事件类型。[BrokerEvent.data]: [CustomEvent]，自定义事件
      */
     CUSTOM_EVENT,
-
-    /**
-     * 行情接口出错。[BrokerEvent.data]: [String]，错误信息
-     */
-    MD_ERROR,
 
     /**
      * 行情接口网络连接成功。[BrokerEvent.data]: [Unit]
@@ -26,19 +31,9 @@ enum class BrokerEventType {
     MD_NET_DISCONNECTED,
 
     /**
-     * 行情接口用户登录成功。[BrokerEvent.data]: [Unit]
+     * 行情接口登录成功。[BrokerEvent.data]: [Unit]
      */
-    MD_USER_LOGGED_IN,
-
-    /**
-     * 行情接口 [Tick] 推送。[BrokerEvent.data]: [Tick]
-     */
-    MD_TICK,
-
-    /**
-     * 交易接口出错。[BrokerEvent.data]: [String]，错误信息
-     */
-    TD_ERROR,
+    MD_LOGGED_IN,
 
     /**
      * 交易接口网络连接成功。[BrokerEvent.data]: [Unit]
@@ -51,29 +46,34 @@ enum class BrokerEventType {
     TD_NET_DISCONNECTED,
 
     /**
-     * 交易接口用户登录成功。[BrokerEvent.data]: [Unit]
+     * 交易接口登录成功。[BrokerEvent.data]: [Unit]
      */
-    TD_USER_LOGGED_IN,
+    TD_LOGGED_IN,
 
     /**
-     * 交易接口订单状态推送。[BrokerEvent.data]: [Order]
+     * 实时行情数据推送。[BrokerEvent.data]: [Tick]
+     */
+    TICK,
+
+    /**
+     * 订单状态推送。[BrokerEvent.data]: [Order]
      * * [OrderStatus.PARTIALLY_FILLED] 及 [OrderStatus.FILLED] 状态的 [Order] 推送总是后于对应的 [Trade] 推送
      * * 撤单失败时不会推送该事件，但会推送 [TD_CANCEL_FAILED] 事件
      * * 推送的 [Order] 实例不会自己更新状态，是静态的，且每次推送的实例不同
      */
-    TD_ORDER_STATUS,
+    ORDER_STATUS,
 
     /**
-     * 交易接口撤单失败。[BrokerEvent.data]: [Order]
+     * 撤单失败推送。[BrokerEvent.data]: [Order]
      * * 与上一次推送的 [Order] 的唯一区别在于 [Order.statusMsg]
      */
-    TD_CANCEL_FAILED,
+    CANCEL_FAILED,
 
     /**
-     * 交易接口成交回报推送。[BrokerEvent.data]: [Trade]
+     * 成交回报推送。[BrokerEvent.data]: [Trade]
      * * 总是先于对应订单的状态推送
      */
-    TD_TRADE_REPORT,
+    TRADE_REPORT,
 }
 
 /**
