@@ -19,6 +19,50 @@
 ## 已有的接口实现
 * [KTrader-Broker-CTP](https://github.com/ktrader-tech/ktrader-broker-ctp) CTP 实现（中国期货 & 期权）
 
+## 接口速览
+带有文档注释的全内容版本参见 [BrokerApi.kt](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/lib/src/main/kotlin/org/rationalityfrontline/ktrader/broker/api/BrokerApi.kt) 。
+```kotlin
+abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
+    abstract val name: String
+    abstract val version: String
+    abstract val account: String
+    abstract val mdConnected: Boolean
+    abstract val tdConnected: Boolean
+    val createTime: LocalDateTime = LocalDateTime.now()
+    val sourceId: String get() = "${name}_${account}_${hashCode()}"
+
+    abstract suspend fun connect(connectMd: Boolean = true, connectTd: Boolean = true, extras: Map<String, Any>? = null)
+    abstract suspend fun close()
+    open fun getTradingDay(): LocalDate
+    abstract suspend fun subscribeMarketData(codes: Collection<String>, extras: Map<String, Any>? = null)
+    open suspend fun subscribeMarketData(code: String, extras: Map<String, Any>? = null)
+    abstract suspend fun unsubscribeMarketData(codes: Collection<String>, extras: Map<String, Any>? = null)
+    open suspend fun unsubscribeMarketData(code: String, extras: Map<String, Any>? = null)
+    abstract suspend fun subscribeAllMarketData(extras: Map<String, Any>? = null)
+    abstract suspend fun unsubscribeAllMarketData(extras: Map<String, Any>? = null)
+    abstract suspend fun querySubscriptions(useCache: Boolean = true, extras: Map<String, Any>? = null): List<String>
+    abstract suspend fun queryLastTick(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Tick?
+    abstract suspend fun querySecurity(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Security?
+    abstract suspend fun queryAllSecurities(useCache: Boolean = true, extras: Map<String, Any>? = null): List<Security>
+    abstract suspend fun queryAssets(useCache: Boolean = true, extras: Map<String, Any>? = null): Assets
+    abstract suspend fun queryPosition(code: String, direction: Direction, useCache: Boolean = true, extras: Map<String, Any>? = null): Position?
+    abstract suspend fun queryPositions(code: String? = null, useCache: Boolean = true, extras: Map<String, Any>? = null): List<Position>
+    abstract suspend fun queryOrder(orderId: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Order?
+    abstract suspend fun queryOrders(code: String? = null, onlyUnfinished: Boolean = true, useCache: Boolean = true, extras: Map<String, Any>? = null): List<Order>
+    abstract suspend fun queryTrade(tradeId: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Trade?
+    abstract suspend fun queryTrades(code: String? = null, orderId: String? = null, useCache: Boolean = true, extras: Map<String, Any>? = null): List<Trade>
+    abstract suspend fun insertOrder(code: String, price: Double, volume: Int, direction: Direction, offset: OrderOffset, orderType: OrderType = OrderType.LIMIT, extras: Map<String, Any>? = null): Order
+    abstract suspend fun cancelOrder(orderId: String, extras: Map<String, Any>? = null)
+    open suspend fun cancelAllOrders(extras: Map<String, Any>? = null)
+    open suspend fun prepareFeeCalculation(codes: Collection<String>? = null, extras: Map<String, Any>? = null)
+    open fun calculatePosition(position: Position, extras: Map<String, Any>? = null)
+    open fun calculateOrder(order: Order, extras: Map<String, Any>? = null)
+    open fun calculateTrade(trade: Trade, extras: Map<String, Any>? = null)
+    open fun customRequest(method: String, params: Map<String, Any>? = null): Any
+    open suspend fun customSuspendRequest(method: String, params: Map<String, Any>? = null): Any
+}
+```
+
 ## Download
 
 **Gradle:**
@@ -29,7 +73,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.rationalityfrontline.ktrader:ktrader-broker-api:1.1.0")
+    implementation("org.rationalityfrontline.ktrader:ktrader-broker-api:1.1.1")
 }
 ```
 
@@ -39,7 +83,7 @@ dependencies {
 <dependency>
     <groupId>org.rationalityfrontline.ktrader</groupId>
     <artifactId>ktrader-broker-api</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 

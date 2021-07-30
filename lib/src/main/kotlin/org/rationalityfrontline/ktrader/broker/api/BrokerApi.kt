@@ -27,11 +27,6 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     abstract val account: String
 
     /**
-     * 唯一标识该 [BrokerApi] 实例的字段，默认实现为 "${name}_${account}_${hashCode()}"
-     */
-    open val sourceId: String get() = "${name}_${account}_${hashCode()}"
-
-    /**
      * 行情接口是否已连接
      */
     abstract val mdConnected: Boolean
@@ -45,6 +40,11 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
      * 该实例的创建时间
      */
     val createTime: LocalDateTime = LocalDateTime.now()
+
+    /**
+     * 唯一标识该 [BrokerApi] 实例的字段，默认实现为 "${name}_${account}_${hashCode()}"
+     */
+    val sourceId: String get() = "${name}_${account}_${hashCode()}"
 
     /**
      * 连接服务器并完成用户登录
@@ -208,7 +208,7 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
      * @param extras 额外的参数，默认为 null
      * @return 产生的订单
      */
-    abstract fun insertOrder(
+    abstract suspend fun insertOrder(
         code: String, price: Double, volume: Int, direction: Direction, offset: OrderOffset,
         orderType: OrderType = OrderType.LIMIT, extras: Map<String, Any>? = null
     ): Order
@@ -218,7 +218,7 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
      * @param orderId 要撤的订单的 ID
      * @param extras 额外的参数，默认为 null
      */
-    abstract fun cancelOrder(orderId: String, extras: Map<String, Any>? = null)
+    abstract suspend fun cancelOrder(orderId: String, extras: Map<String, Any>? = null)
 
     /**
      * 撤单所有未完成订单
@@ -255,17 +255,17 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     open fun calculateTrade(trade: Trade, extras: Map<String, Any>? = null) {}
 
     /**
-     * 自定义的挂起请求，参见 [Broker.customMethods]
-     */
-    open suspend fun customSuspendRequest(method: String, params: Map<String, Any>? = null): Any {
-        throw IllegalArgumentException("Unsupported suspend custom method：$method")
-    }
-
-    /**
      * 自定义的请求，参见 [Broker.customMethods]
      */
     open fun customRequest(method: String, params: Map<String, Any>? = null): Any {
         throw IllegalArgumentException("Unsupported custom method：$method")
+    }
+
+    /**
+     * 自定义的耗时请求，参见 [Broker.customMethods]
+     */
+    open suspend fun customSuspendRequest(method: String, params: Map<String, Any>? = null): Any {
+        throw IllegalArgumentException("Unsupported suspend custom method：$method")
     }
 
     override fun toString(): String {
