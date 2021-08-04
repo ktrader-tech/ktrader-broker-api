@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.rationalityfrontline.ktrader.broker.api
 
 /**
@@ -6,49 +8,19 @@ package org.rationalityfrontline.ktrader.broker.api
 enum class BrokerEventType {
 
     /**
-     * 消息通知。[BrokerEvent.data]: [String]，消息内容
-     */
-    INFO,
-
-    /**
-     * 发生错误。[BrokerEvent.data]: [String]，错误信息
-     */
-    ERROR,
-
-    /**
      * 自定义事件类型。[BrokerEvent.data]: [CustomEvent]，自定义事件
      */
     CUSTOM_EVENT,
 
     /**
-     * 行情接口网络连接成功。[BrokerEvent.data]: [Unit]
+     * 消息通知事件。[BrokerEvent.data]: [MessageEvent]
      */
-    MD_NET_CONNECTED,
+    MESSAGE,
 
     /**
-     * 行情接口网络连接断开。[BrokerEvent.data]: [String]，断开原因
+     * 网络连接状态变更。[BrokerEvent.data]: [ConnectionEvent]
      */
-    MD_NET_DISCONNECTED,
-
-    /**
-     * 行情接口登录成功。[BrokerEvent.data]: [Unit]
-     */
-    MD_LOGGED_IN,
-
-    /**
-     * 交易接口网络连接成功。[BrokerEvent.data]: [Unit]
-     */
-    TD_NET_CONNECTED,
-
-    /**
-     * 交易接口网络连接断开。[BrokerEvent.data]: [String]，断开原因
-     */
-    TD_NET_DISCONNECTED,
-
-    /**
-     * 交易接口登录成功。[BrokerEvent.data]: [Unit]
-     */
-    TD_LOGGED_IN,
+    CONNECTION,
 
     /**
      * 实时行情数据推送。[BrokerEvent.data]: [Tick]
@@ -58,7 +30,7 @@ enum class BrokerEventType {
     /**
      * 订单状态推送。[BrokerEvent.data]: [Order]
      * * [OrderStatus.PARTIALLY_FILLED] 及 [OrderStatus.FILLED] 状态的 [Order] 推送总是后于对应的 [Trade] 推送
-     * * 撤单失败时不会推送该事件，但会推送 [TD_CANCEL_FAILED] 事件
+     * * 撤单失败时不会推送该事件，但会推送 [CANCEL_FAILED] 事件
      * * 推送的 [Order] 实例不会自己更新状态，是静态的，且每次推送的实例不同
      */
     ORDER_STATUS,
@@ -96,4 +68,95 @@ data class BrokerEvent(
 data class CustomEvent(
     val type: String,
     val data: Any,
+)
+
+/**
+ * 消息事件类型
+ */
+enum class MessageEventType {
+    /**
+     * 普通信息，用于通知状态变化、执行进度等。
+     */
+    INFO,
+
+    /**
+     * 警告信息，表示发生了可能导致错误的事件。
+     */
+    WARNING,
+
+    /**
+     * 错误信息，表示发生了错误。
+     */
+    ERROR,
+}
+
+/**
+ * 消息通知事件。
+ * @param type 消息类型
+ * @param msg 消息内容
+ */
+data class MessageEvent(
+    val type: MessageEventType,
+    val msg: String,
+)
+
+/**
+ * 网络连接及用户登录相关的事件类型
+ */
+enum class ConnectionEventType {
+
+    /**
+     * 自定义事件类型。
+     */
+    CUSTOM_EVENT,
+
+    /**
+     * 行情接口网络连接成功。
+     */
+    MD_NET_CONNECTED,
+
+    /**
+     * 行情接口网络连接断开。
+     */
+    MD_NET_DISCONNECTED,
+
+    /**
+     * 行情接口登录成功。
+     */
+    MD_LOGGED_IN,
+
+    /**
+     * 行情接口退出登录。
+     */
+    MD_LOGGED_OUT,
+
+    /**
+     * 交易接口网络连接成功。
+     */
+    TD_NET_CONNECTED,
+
+    /**
+     * 交易接口网络连接断开。[BrokerEvent.data]: [String]，断开原因
+     */
+    TD_NET_DISCONNECTED,
+
+    /**
+     * 交易接口登录成功。[BrokerEvent.data]: [Unit]
+     */
+    TD_LOGGED_IN,
+
+    /**
+     * 交易接口退出登录。[BrokerEvent.data]: [Unit]
+     */
+    TD_LOGGED_OUT,
+}
+
+/**
+ * 网络连接及用户登录相关的事件。
+ * @param type 事件类型
+ * @param msg 事件描述
+ */
+data class ConnectionEvent(
+    val type: ConnectionEventType,
+    val msg: String = "",
 )
