@@ -2,6 +2,11 @@
 
 package org.rationalityfrontline.ktrader.broker.api
 
+import org.rationalityfrontline.ktrader.datatype.Order
+import org.rationalityfrontline.ktrader.datatype.OrderStatus
+import org.rationalityfrontline.ktrader.datatype.Tick
+import org.rationalityfrontline.ktrader.datatype.Trade
+
 /**
  * 推送事件类型
  */
@@ -13,9 +18,9 @@ enum class BrokerEventType {
     CUSTOM_EVENT,
 
     /**
-     * 消息通知事件。[BrokerEvent.data]: [MessageEvent]
+     * 日志事件。[BrokerEvent.data]: [LogEvent]
      */
-    MESSAGE,
+    LOG,
 
     /**
      * 网络连接状态变更。[BrokerEvent.data]: [ConnectionEvent]
@@ -71,9 +76,9 @@ data class CustomEvent(
 )
 
 /**
- * 消息事件类型
+ * 日志等级
  */
-enum class MessageEventType {
+enum class LogLevel {
     /**
      * 普通信息，用于通知状态变化、执行进度等。
      */
@@ -91,12 +96,12 @@ enum class MessageEventType {
 }
 
 /**
- * 消息通知事件。
- * @param type 消息类型
+ * 日志事件。
+ * @param level 日志等级
  * @param msg 消息内容
  */
-data class MessageEvent(
-    val type: MessageEventType,
+data class LogEvent(
+    val level: LogLevel,
     val msg: String,
 )
 

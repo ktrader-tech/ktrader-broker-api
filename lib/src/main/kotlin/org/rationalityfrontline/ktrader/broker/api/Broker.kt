@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.rationalityfrontline.ktrader.broker.api
 
 import org.pf4j.ExtensionPoint
@@ -45,7 +47,7 @@ abstract class Broker : ExtensionPoint {
     /**
      * 创建 [BrokerApi] 实例
      * @param config 参见 [configKeys]
-     * @param kEvent 会通过该 [KEvent] 实例推送 [BrokerEvent]，如 [Tick]、成交回报等
+     * @param kEvent 会通过该 [KEvent] 实例推送 [BrokerEvent]，如 Tick、成交回报等
      */
     abstract fun createApi(config: Map<String, Any>, kEvent: KEvent): BrokerApi
 
