@@ -1,5 +1,6 @@
 @SuppressWarnings("requires-transitive-automatic")
 module ktrader.broker.api {
+    requires transitive kotlin.stdlib;
     requires transitive kotlinx.coroutines.core.jvm;
     requires transitive kevent;
     requires transitive ktrader.datatype;

@@ -60,7 +60,7 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     /**
      * 关闭该实例并释放资源，调用后该实例将不再可用
      */
-    abstract suspend fun close()
+    abstract fun close()
 
     /**
      * 获取当前交易日（主要用于有夜盘的交易品种）
