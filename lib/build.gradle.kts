@@ -46,15 +46,6 @@ tasks {
         archiveClassifier.set("sources")
         from(sourceSets["main"].allSource)
     }
-    test {
-        testLogging.showStandardStreams = true
-        useJUnitPlatform {
-            jvmArgs = listOf(
-                "--add-exports", "org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED",
-                "--add-exports", "org.junit.platform.commons/org.junit.platform.commons.logging=ALL-UNNAMED"
-            )
-        }
-    }
 }
 
 publishing {
