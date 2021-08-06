@@ -21,7 +21,7 @@ dependencies {
     compileOnly("org.rationalityfrontline.workaround:pf4j:3.7.0")
     api("org.rationalityfrontline:kevent:2.0.1")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
-    api("org.rationalityfrontline.ktrader:ktrader-datatype:1.0.0")
+    api("org.rationalityfrontline.ktrader:ktrader-datatype:1.0.1")
 }
 
 sourceSets.main {

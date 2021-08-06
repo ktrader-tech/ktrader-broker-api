@@ -130,16 +130,16 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
      * 查询 [code] 的证券信息
      * @param useCache 是否优先查询本地维护的缓存信息，默认为 true
      * @param extras 额外的参数，默认为 null
-     * @return 查询到的 [Security]，如果未查询到，返回 null
+     * @return 查询到的 [SecurityInfo]，如果未查询到，返回 null
      */
-    abstract suspend fun querySecurity(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Security?
+    abstract suspend fun querySecurity(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): SecurityInfo?
 
     /**
      * 查询全市场证券的信息
      * @param useCache 是否优先查询本地维护的缓存信息，默认为 true
      * @param extras 额外的参数，默认为 null
      */
-    abstract suspend fun queryAllSecurities(useCache: Boolean = true, extras: Map<String, Any>? = null): List<Security>
+    abstract suspend fun queryAllSecurities(useCache: Boolean = true, extras: Map<String, Any>? = null): List<SecurityInfo>
 
     /**
      * 查询资金账户的资产
