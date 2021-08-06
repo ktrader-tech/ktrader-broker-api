@@ -10,7 +10,8 @@
 > 目前主要针对中国国内市场（CTP & XTP）
 
 ## 接口速览
-带有文档注释的全内容版本参见 [BrokerApi.kt](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/lib/src/main/kotlin/org/rationalityfrontline/ktrader/broker/api/BrokerApi.kt) 。
+带有文档注释的全内容版本参见 [BrokerApi.kt](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/lib/src/main/kotlin/org/rationalityfrontline/ktrader/broker/api/BrokerApi.kt)
+及 [BrokerEvent.kt](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/lib/src/main/kotlin/org/rationalityfrontline/ktrader/broker/api/BrokerEvent.kt) 。
 ```kotlin
 abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     abstract val name: String
@@ -22,7 +23,7 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     val sourceId: String get() = "${name}_${account}_${hashCode()}"
 
     abstract suspend fun connect(connectMd: Boolean = true, connectTd: Boolean = true, extras: Map<String, Any>? = null)
-    abstract suspend fun close()
+    abstract fun close()
     open fun getTradingDay(): LocalDate
     abstract suspend fun subscribeMarketData(codes: Collection<String>, extras: Map<String, Any>? = null)
     open suspend fun subscribeMarketData(code: String, extras: Map<String, Any>? = null)
@@ -32,8 +33,8 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     abstract suspend fun unsubscribeAllMarketData(extras: Map<String, Any>? = null)
     abstract suspend fun querySubscriptions(useCache: Boolean = true, extras: Map<String, Any>? = null): List<String>
     abstract suspend fun queryLastTick(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Tick?
-    abstract suspend fun querySecurity(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): Security?
-    abstract suspend fun queryAllSecurities(useCache: Boolean = true, extras: Map<String, Any>? = null): List<Security>
+    abstract suspend fun querySecurity(code: String, useCache: Boolean = true, extras: Map<String, Any>? = null): SecurityInfo?
+    abstract suspend fun queryAllSecurities(useCache: Boolean = true, extras: Map<String, Any>? = null): List<SecurityInfo>
     abstract suspend fun queryAssets(useCache: Boolean = true, extras: Map<String, Any>? = null): Assets
     abstract suspend fun queryPosition(code: String, direction: Direction, useCache: Boolean = true, extras: Map<String, Any>? = null): Position?
     abstract suspend fun queryPositions(code: String? = null, useCache: Boolean = true, extras: Map<String, Any>? = null): List<Position>
@@ -50,6 +51,16 @@ abstract class BrokerApi(val config: Map<String, Any>, val kEvent: KEvent) {
     open fun calculateTrade(trade: Trade, extras: Map<String, Any>? = null)
     open fun customRequest(method: String, params: Map<String, Any>? = null): Any
     open suspend fun customSuspendRequest(method: String, params: Map<String, Any>? = null): Any
+}
+
+enum class BrokerEventType {
+    CUSTOM_EVENT,
+    LOG,
+    CONNECTION,
+    TICK,
+    ORDER_STATUS,
+    CANCEL_FAILED,
+    TRADE_REPORT,
 }
 ```
 
@@ -73,7 +84,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.rationalityfrontline.ktrader:ktrader-broker-api:1.1.2")
+    implementation("org.rationalityfrontline.ktrader:ktrader-broker-api:1.1.3")
 }
 ```
 
@@ -83,7 +94,7 @@ dependencies {
 <dependency>
     <groupId>org.rationalityfrontline.ktrader</groupId>
     <artifactId>ktrader-broker-api</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
 </dependency>
 ```
 
