@@ -49,7 +49,7 @@ abstract class Broker : ExtensionPoint {
      * @param config 参见 [configKeys]
      * @param kEvent 会通过该 [KEvent] 实例推送 [BrokerEvent]，如 Tick、成交回报等
      */
-    abstract fun createApi(config: Map<String, Any>, kEvent: KEvent): BrokerApi
+    abstract fun createApi(config: Map<String, String>, kEvent: KEvent): BrokerApi
 
     override fun toString(): String {
         fun formatPairList(list: List<Pair<String, String>>): String {

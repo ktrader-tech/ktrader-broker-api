@@ -8,12 +8,13 @@ plugins {
 }
 
 group = "org.rationalityfrontline.ktrader"
-version = "1.1.3"
+version = "1.2.0"
 val NAME = "ktrader-broker-api"
 val DESC = "KTrader Broker API"
 val GITHUB_REPO = "ktrader-tech/ktrader-broker-api"
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -21,7 +22,7 @@ dependencies {
     compileOnly("org.rationalityfrontline.workaround:pf4j:3.7.0")
     api("org.rationalityfrontline:kevent:2.0.1")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
-    api("org.rationalityfrontline.ktrader:ktrader-datatype:1.0.1")
+    api("org.rationalityfrontline.ktrader:ktrader-datatype:1.1.0")
 }
 
 sourceSets.main {

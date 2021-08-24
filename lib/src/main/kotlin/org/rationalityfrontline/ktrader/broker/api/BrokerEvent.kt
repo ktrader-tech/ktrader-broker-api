@@ -6,6 +6,7 @@ import org.rationalityfrontline.ktrader.datatype.Order
 import org.rationalityfrontline.ktrader.datatype.OrderStatus
 import org.rationalityfrontline.ktrader.datatype.Tick
 import org.rationalityfrontline.ktrader.datatype.Trade
+import java.time.LocalDate
 
 /**
  * 推送事件类型
@@ -23,14 +24,24 @@ enum class BrokerEventType {
     LOG,
 
     /**
+     * 交易日变更。[BrokerEvent.data]: [LocalDate]
+     */
+    NEW_TRADING_DAY,
+
+    /**
      * 网络连接状态变更。[BrokerEvent.data]: [ConnectionEvent]
      */
     CONNECTION,
 
     /**
-     * 实时行情数据推送。[BrokerEvent.data]: [Tick]
+     * [Tick] 行情数据推送。[BrokerEvent.data]: [Tick]
      */
     TICK,
+
+    /**
+     * [Bar] 行情数据推送。[BrokerEvent.data]: [Bar]
+     */
+    Bar,
 
     /**
      * 订单状态推送。[BrokerEvent.data]: [Order]
