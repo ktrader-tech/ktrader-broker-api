@@ -220,12 +220,13 @@ interface BrokerApi {
      * @param direction 交易方向（做多/做空）
      * @param offset 开平类型（开仓/平仓/平今/平昨）
      * @param orderType 订单类型（限价单/市价单/FAK/FOK等）
+     * @param minVolume 最小成交量，仅当订单类型为 FAK 时生效
      * @param extras 额外的参数，默认为 null
      * @return 产生的订单
      */
     suspend fun insertOrder(
         code: String, price: Double, volume: Int, direction: Direction, offset: OrderOffset,
-        orderType: OrderType = OrderType.LIMIT, extras: Map<String, String>? = null
+        orderType: OrderType = OrderType.LIMIT, minVolume: Int = 0, extras: Map<String, String>? = null
     ): Order
 
     /**

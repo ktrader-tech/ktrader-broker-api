@@ -1,10 +1,10 @@
 plugins {
-    kotlin("jvm") version "1.5.21"
+    kotlin("jvm") version "1.5.30"
     `java-library`
     `maven-publish`
     signing
     id("org.jetbrains.dokka") version "1.5.0"
-    id("org.javamodularity.moduleplugin") version "1.8.7"
+    id("org.javamodularity.moduleplugin") version "1.8.8"
 }
 
 group = "org.rationalityfrontline.ktrader"
@@ -14,8 +14,8 @@ val DESC = "KTrader Broker API"
 val GITHUB_REPO = "ktrader-tech/ktrader-broker-api"
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -46,6 +46,13 @@ tasks {
     register<Jar>("sourcesJar") {
         archiveClassifier.set("sources")
         from(sourceSets["main"].allSource)
+    }
+    jar {
+        manifest.attributes(mapOf(
+            "Implementation-Title" to NAME,
+            "Implementation-Version" to project.version,
+            "Implementation-Vendor" to "RationalityFrontline"
+        ))
     }
 }
 
