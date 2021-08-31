@@ -100,7 +100,7 @@ dependencies {
 
 ## License
 
-Ktrader-Broker-API is released under the [Apache 2.0 license](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/LICENSE).
+KTrader-Broker-API is released under the [Apache 2.0 license](https://github.com/ktrader-tech/ktrader-broker-api/blob/master/LICENSE).
 
 ```
 Copyright 2021 RationalityFrontline
