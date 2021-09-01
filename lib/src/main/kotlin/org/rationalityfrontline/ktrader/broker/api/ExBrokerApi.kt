@@ -111,4 +111,11 @@ interface ExBrokerApi : BrokerApi{
     ): Order {
         return insertOrder(code, price, volume, direction, offset, null, orderType, minVolume, extras)
     }
+
+    /**
+     * cancelOrder(order.orderId) 的快捷写法
+     */
+    suspend fun cancelOrder(order: Order) {
+        cancelOrder(order.orderId)
+    }
 }
