@@ -6,7 +6,7 @@ import org.pf4j.ExtensionPoint
 import org.rationalityfrontline.kevent.KEvent
 
 /**
- * 交易接口插件类，用于获取相关信息及生成 [BrokerApi] 实例
+ * 交易接口插件类，用于获取交易接口相关信息及生成 [BrokerApi] 实例
  */
 abstract class BrokerExtension : ExtensionPoint {
 
@@ -59,7 +59,8 @@ abstract class BrokerExtension : ExtensionPoint {
             }
         }
         return """
-            Broker@${hashCode()}, name=$name, version=$version
+            BrokerExtension:
+            name=$name, version=$version
             configKeys:
             ${formatPairList(configKeys)}
             methodExtras:
