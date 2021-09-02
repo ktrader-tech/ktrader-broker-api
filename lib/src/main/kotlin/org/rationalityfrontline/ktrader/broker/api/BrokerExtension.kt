@@ -8,7 +8,7 @@ import org.rationalityfrontline.kevent.KEvent
 /**
  * 交易接口插件类，用于获取相关信息及生成 [BrokerApi] 实例
  */
-abstract class Broker : ExtensionPoint {
+abstract class BrokerExtension : ExtensionPoint {
 
     /**
      * 交易接口名称。例："CTP"
@@ -16,7 +16,7 @@ abstract class Broker : ExtensionPoint {
     abstract val name: String
 
     /**
-     * 交易接口版本。
+     * 交易接口版本
      */
     abstract val version: String
 
@@ -27,7 +27,7 @@ abstract class Broker : ExtensionPoint {
     abstract val configKeys: List<Pair<String, String>>
 
     /**
-     * [BrokerApi] 成员方法的额外参数（extras: Map<String, Any>?）说明。[Pair.first] 为方法名，[Pair.second] 为额外参数说明。
+     * [BrokerApi] 成员方法的额外参数（extras: Map<String, String>?）说明。[Pair.first] 为方法名，[Pair.second] 为额外参数说明。
      * 例：Pair("insertOrder", "[minVolume: Int]【最小成交量。仅当下单类型为 OrderType.FAK 时生效】")
      */
     open val methodExtras: List<Pair<String, String>> = listOf()
@@ -40,7 +40,7 @@ abstract class Broker : ExtensionPoint {
 
     /**
      * 自定义事件的说明（对应 [CustomEvent]）。[Pair.first] 为事件类型，[Pair.second] 为事件说明。
-     * 例：Pair("TD_MARKET_STATUS_CHANGE", "[data: MarketStatus]【市场交易状态变动】")
+     * 例：Pair("MARKET_STATUS_CHANGE", "[data: MarketStatus]【市场交易状态变动】")
      */
     open val customEvents: List<Pair<String, String>> = listOf()
 

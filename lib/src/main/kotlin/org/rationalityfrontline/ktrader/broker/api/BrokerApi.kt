@@ -17,12 +17,12 @@ interface BrokerApi {
     val kEvent: KEvent
 
     /**
-     * 交易接口名称，与 [Broker.name] 相同。例："CTP"
+     * 交易接口名称，与 [BrokerExtension.name] 相同。例："CTP"
      */
     val name: String
 
     /**
-     * 交易接口版本，与 [Broker.version] 相同。
+     * 交易接口版本，与 [BrokerExtension.version] 相同。
      */
     val version: String
 
@@ -268,16 +268,16 @@ interface BrokerApi {
     fun calculateTrade(trade: Trade, extras: Map<String, String>? = null) {}
 
     /**
-     * 自定义的请求，参见 [Broker.customMethods]
+     * 自定义的请求，参见 [BrokerExtension.customMethods]
      */
-    fun customRequest(method: String, params: Map<String, Any>? = null): Any {
+    fun customRequest(method: String, params: Map<String, String>? = null): String {
         throw IllegalArgumentException("Unsupported custom method：$method")
     }
 
     /**
-     * 自定义的耗时请求，参见 [Broker.customMethods]
+     * 自定义的耗时请求，参见 [BrokerExtension.customMethods]
      */
-    suspend fun customSuspendRequest(method: String, params: Map<String, Any>? = null): Any {
+    suspend fun customSuspendRequest(method: String, params: Map<String, String>? = null): String {
         throw IllegalArgumentException("Unsupported suspend custom method：$method")
     }
 }
